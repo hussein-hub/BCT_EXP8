@@ -27,10 +27,8 @@ class App extends Component {
 
   async loadBlockchainData() {
     const web3 = window.web3
-    // Load account
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
-    // Network ID
     const networkId = await web3.eth.net.getId()
     const networkData = Youtube.networks[networkId]
     if(networkData) {
@@ -41,7 +39,6 @@ class App extends Component {
 
       console.log(this.state.videosCount);
 
-      // Load videos, sort by newest
       for (var i=videosCount; i>=1; i--) {
         const video = await youtube.methods.videos(i).call()
         this.setState({
@@ -49,7 +46,6 @@ class App extends Component {
         })
       }
 
-      //Set latest video with title to view as default 
       const latest = await youtube.methods.videos(videosCount).call()
       this.setState({
         currentHash: latest.hash,
